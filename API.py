@@ -18,9 +18,6 @@ app = Flask(__name__)
 def prediction():
     row_json = request.json
     row = pd.read_json(StringIO(row_json))
-    #row = row_dict['row']
-    #user_id = data['SK_ID_CURR']
-    #row = data[data['SK_ID_CURR'] == test_id]
     row = row.drop(columns=['SK_ID_CURR'])
     
     resultat = model.predict_proba(row)
