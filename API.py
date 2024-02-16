@@ -14,6 +14,10 @@ model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_versio
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def accueil():
+    return "Bienvenue !"
+
 @app.route('/prediction', methods=['POST'])
 def prediction():
     row_json = request.json
