@@ -4,12 +4,15 @@ import shap
 from io import StringIO
 from flask import Flask, request, jsonify
 
+### Récupération du modèle directement depuis MLFlow :
 # To start the mlflow server in local : mlflow server --host 127.0.0.1 --port 8080
-mlflow.set_tracking_uri(uri="http://127.0.0.1:8080")
-model_name = "BestModel"
-model_version = 1
-#Récupération du modèle
-model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_version}")
+#mlflow.set_tracking_uri(uri="http://127.0.0.1:8080")
+#model_name = "BestModel"
+#model_version = 1
+#model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_version}")
+
+### Récupération du modèle depuis les fichiers en local :
+model = mlflow.sklearn.load_model("./model/")
 
 
 app = Flask(__name__)
