@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify
 #model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_version}")
 
 ### Récupération du modèle depuis les fichiers en local :
-model = mlflow.sklearn.load_model("./model/")
+#model = mlflow.sklearn.load_model("./model/")
 
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ app = Flask(__name__)
 def accueil():
     return "Bienvenue !"
 
-@app.route('/prediction', methods=['POST'])
+"""@app.route('/prediction', methods=['POST'])
 def prediction():
     row_json = request.json
     row = pd.read_json(StringIO(row_json))
@@ -38,7 +38,7 @@ def prediction():
         'Shap_Values': shap_values[1][0].tolist(),
         'Feature_Names': row.columns.tolist(),
         'Feature_Values': row.values[0].tolist()
-    })
+    })"""
 
 if __name__ == '__main__':
     app.run()
