@@ -25,7 +25,8 @@ if id_user:
             st.write("Passage API OK")
             resultat = req.json()
             st.write("Probabilité de faillite du client :", round(resultat["Proba_Faillite"], 2),"%")
-            if resultat["Proba_Faillite"]>30:
+            #Résultat du prêt en fonction du threshold précédemment optimisé :
+            if resultat["Proba_Faillite"]>24: 
                 st.write("Prêt refusé...")
             else:
                 st.write("Prêt accepté !")
