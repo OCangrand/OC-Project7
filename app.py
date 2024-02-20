@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify
 #model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_version}")
 
 ### Récupération du modèle depuis les fichiers en local :
-#model = mlflow.sklearn.load_model("./model/")
+model = mlflow.sklearn.load_model("./model/")
 
 
 app = Flask(__name__)
