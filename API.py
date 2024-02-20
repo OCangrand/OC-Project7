@@ -1,4 +1,5 @@
 #import mlflow
+import os
 import pickle
 import pandas as pd
 import shap
@@ -15,8 +16,15 @@ from flask import Flask, request, jsonify
 ### Récupération du modèle depuis les fichiers en local :
 #model = mlflow.sklearn.load_model("./model/")
 
-with open('model/model.pkl', 'rb') as pickle_file:
-    model = pickle.load(pickle_file)
+current_directory = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_directory, "model", "model.pkl")
+
+try:
+    with open(model_path, 'rb') as pickle_file:
+        model = pickle.load(pickle_file)
+except:
+    print("Echec chargement model")
+    print(model_path)
 
 app = Flask(__name__)
 
