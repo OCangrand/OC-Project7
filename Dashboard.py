@@ -21,7 +21,8 @@ if id_user:
             st.write("Id client actuel :", id_user)
             row = df[df['SK_ID_CURR'] == int(id_user)]
             row_json = row.to_json()
-            req = requests.post("http://127.0.0.1:5000/prediction", json=row_json)
+            #req = requests.post("http://127.0.0.1:5000/prediction", json=row_json)
+            req = requests.post("https://openclassrooms-projet7-oc.azurewebsites.net/prediction", json=row_json)            
             st.write("Passage API OK")
             resultat = req.json()
             st.write("Probabilité de faillite du client :", round(resultat["Proba_Faillite"], 2),"%")
