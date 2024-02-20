@@ -1,4 +1,3 @@
-#import mlflow
 import os
 import pickle
 import pandas as pd
@@ -21,20 +20,15 @@ app = Flask(__name__)
 current_directory = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_directory, "model", "model.pkl")
 
-
 with open(model_path, 'rb') as pickle_file:
     model = pickle.load(pickle_file)
-
-print("Echec chargement model")
-print(model_path)
-
 
 
 @app.route('/', methods=['GET'])
 def accueil():
     return "Bienvenue !"
 
-"""@app.route('/prediction', methods=['POST'])
+@app.route('/prediction', methods=['POST'])
 def prediction():
     row_json = request.json
     row = pd.read_json(StringIO(row_json))
@@ -51,7 +45,7 @@ def prediction():
         'Shap_Values': shap_values[1][0].tolist(),
         'Feature_Names': row.columns.tolist(),
         'Feature_Values': row.values[0].tolist()
-    })"""
+    })
 
 if __name__ == '__main__':
     app.run()

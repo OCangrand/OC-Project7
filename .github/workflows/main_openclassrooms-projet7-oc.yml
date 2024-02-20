@@ -31,19 +31,19 @@ jobs:
         run: pip install -r requirements.txt
 
       #- name: Run tests unitaires
-        #run: python API.py
+        #run: pytest test_API.py
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-      #- name: Zip artifact for deployment
-      #  run: zip release.zip ./* -r
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            .
+            release.zip
             !venv/
 
   deploy:
@@ -60,10 +60,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: python-app
-          path: .
 
-      #- name: Unzip artifact for deployment
-      #  run: unzip release.zip
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
 
       
       - name: Login to Azure
