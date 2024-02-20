@@ -21,12 +21,12 @@ app = Flask(__name__)
 current_directory = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_directory, "model", "model.pkl")
 
-try:
-    with open(model_path, 'rb') as pickle_file:
-        model = pickle.load(pickle_file)
-except:
-    print("Echec chargement model")
-    print(model_path)
+
+with open(model_path, 'rb') as pickle_file:
+    model = pickle.load(pickle_file)
+
+print("Echec chargement model")
+print(model_path)
 
 
 
