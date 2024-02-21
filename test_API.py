@@ -1,9 +1,8 @@
 import pandas as pd
-import numpy as np
 import pytest
-import requests
 from app import app, model
 
+#Dataframe de test avec seulement les 10 premières lignes pour pouvoir tester l'API
 df = pd.read_csv('dataframe_final_test_10first.csv')
 
 def test_model():
@@ -31,6 +30,6 @@ def test_prediction(client):
         response = client.post('/prediction', json=row_json)
         resultat = response.json
         pred_proba = round(resultat["Proba_Faillite"], 2)
-        assert 0 <= pred_proba <= 100, "La probilité de faillite devrait être entre 0 et 100%."
-        assert len(resultat['Shap_Values']) == 795
+        assert 0 <= pred_proba <= 100, "La probabilité de faillite devrait être entre 0 et 100%."
+        assert len(resultat['Shap_Values']) == 795, "Le nombre de features ou le calcul des features importances avec Shap n'est pas bon."
 
