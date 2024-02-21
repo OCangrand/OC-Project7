@@ -2,9 +2,7 @@ import pandas as pd
 import numpy as np
 import pytest
 import requests
-#import flask
-#from flask import json, jsonify, request
-from API import app, model, prediction
+from app import app, model
 from Dashboard import df
 
 def test_csv():

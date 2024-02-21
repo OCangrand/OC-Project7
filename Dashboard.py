@@ -8,6 +8,7 @@ st.set_page_config(layout="wide")
 st.title("Calcul de probabilité du remboursement d'un prêt")
 
 df = pd.read_csv("dataframe_final_test.csv")
+GlobalShapValues = pd.read_csv("shapGlobalSorted.csv")
 
 id_user = st.text_input("Entrez l'id du client")
 
@@ -23,14 +24,22 @@ if id_user:
             row_json = row.to_json()
             #req = requests.post("http://127.0.0.1:5000/prediction", json=row_json)
             req = requests.post("https://openclassrooms-projet7-oc.azurewebsites.net/prediction", json=row_json)            
-            st.write("Passage API OK")
+            #st.write("Passage API OK")
             resultat = req.json()
             st.write("Probabilité de faillite du client :", round(resultat["Proba_Faillite"], 2),"%")
             #Résultat du prêt en fonction du threshold précédemment optimisé :
             if resultat["Proba_Faillite"]>24: 
-                st.write("Prêt refusé...")
+                st.write(":red[Prêt refusé...]")
             else:
-                st.write("Prêt accepté !")
+                st.write(":green[Prêt accepté !]")
+
+
+            c1, c2 = st.columns(2)
+            c1.title("Détails du client")
+            c2.title("Shap Values Globales")
+
+
+            c1, c2, c3 = st.columns([0.37, 0.4, 0.23])
 
             dfFeatName = pd.DataFrame(resultat['Feature_Names'])
             dfFeatValue = pd.DataFrame(resultat['Feature_Values'])
@@ -41,7 +50,15 @@ if id_user:
             feat_df.sort_values(by='Abs_Shap', ascending=False, inplace=True, ignore_index=True)
             feat_df.drop('Abs_Shap', axis=1, inplace=True)
 
-            st.write(feat_df)
+            c1.write(feat_df)
+
+            Top10Shap = px.bar(GlobalShapValues.head(10), x='Features', y='Shap Values')
+            Top10Shap.update_yaxes(title='', visible=True, showticklabels=True)
+            Top10Shap.update_xaxes(title='', visible=True, showticklabels=True)          
+            c2.write("Top 10 des features les plus impactantes :")
+            c2.plotly_chart(Top10Shap)
+
+            c3.write(GlobalShapValues)
 
             
             c1, c2 = st.columns(2)
