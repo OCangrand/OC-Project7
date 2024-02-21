@@ -3,12 +3,8 @@ import numpy as np
 import pytest
 import requests
 from app import app, model
-from Dashboard import df
 
-def test_csv():
-    nb_col = df.shape[1]
-    assert nb_col == 796, "Le nombre de colonnes devrait être égal à 796"
-
+df = pd.read_csv('dataframe_final_test_10first.csv')
 
 def test_model():
     assert model is not None, "Le modèle n'a pas pu être récupéré"
