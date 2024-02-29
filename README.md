@@ -13,6 +13,6 @@ Dépot de mon travail sur le projet 7 de la formation Data Scientist d'OpenClass
 - **Modelisation.ipynb** : Notebook principal, allant du test des différents modèles à l'analyse de la feature importance.
 - **app.py** : API hébergée à cette adresse : https://openclassrooms-projet7-oc.azurewebsites.net/.
 - **data_drift_report.html** : Rapport sur le Datadrift généré via le notebook Datadrift.
-- **dataframe_final_test_10first.csv** : Contient les 10 premières lignes du dataframe final généré après le feature engineering et toutes autres modifications. Il permet simplement au tests Pytest de fontionner. Le fichier complet est trop volumineux pour être stocké ici.
+- **dataframe_final_test_10k.csv** : Contient les 10k premières lignes du dataframe final généré après le feature engineering et toutes autres modifications. Le fichier complet est trop volumineux pour être stocké ici donc c'est ce dernier qui est utilisé dans l'intégralité du projet.
 - **requirements.txt** : Liste des packages nécessaires au bon fonctionnement du projet.
 - **test_API.py** : Fichier de tests unitaires fait avec Pytest.
