@@ -3,7 +3,7 @@ import pytest
 from app import app, model
 
 #Dataframe de test avec seulement les 10 premières lignes pour pouvoir tester l'API
-df = pd.read_csv('dataframe_final_test_10first.csv')
+df = pd.read_csv('dataframe_final_test_10k.csv')
 
 def test_model():
     assert model is not None, "Le modèle n'a pas pu être récupéré"

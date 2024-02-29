@@ -7,7 +7,7 @@ st.set_page_config(layout="wide")
 
 st.title("Calcul de probabilité du remboursement d'un prêt")
 
-df = pd.read_csv("dataframe_final_test.csv")
+df = pd.read_csv("dataframe_final_test_10k.csv")
 GlobalShapValues = pd.read_csv("shapGlobalSorted.csv")
 
 id_user = st.text_input("Entrez l'id du client")
@@ -86,4 +86,4 @@ if id_user:
                 fig_scatter.add_annotation(x=feat_selected_scatter_1, y=feat_selected_scatter_2, text="Client", showarrow=True, arrowhead=1, arrowcolor="Red", bgcolor="Red")
                 c2.plotly_chart(fig_scatter)
         else:
-            st.write("Id non trouvé dans la base de donnée. Essayez-en un autre (Exemple : 100001, 100005, 100028, 456250).")
+            st.write("Id non trouvé dans la base de donnée. Essayez-en un autre (Exemple : 100001, 100005, 100028).")
