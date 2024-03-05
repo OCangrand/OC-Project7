@@ -63,23 +63,6 @@ if id_user:
 
             c3.write(GlobalShapValues)
 
-            CB_modifValues = st.checkbox("Modification de valeurs")
-            if CB_modifValues:
-                edited_df = st.data_editor(feat_df, disabled=("Feature_Names", "Shap_Values"))
-                if st.button("Appliquer les modifications"):
-                    new_row = pd.DataFrame(columns=edited_df['Feature_Names'].tolist())
-                    new_row.loc[0] = edited_df['Feature_Values'].tolist()
-                    new_row['SK_ID_CURR'] = int(id_user)
-                    new_row_sorted = new_row[list_features]
-                    new_row_json = new_row_sorted.to_json()
-                    req = requests.post("https://openclassrooms-projet7-oc.azurewebsites.net/prediction", json=new_row_json)
-                    resultatPostModif = req.json()
-                    st.write("Probabilité de faillite du client :", round(resultatPostModif["Proba_Faillite"], 2),"%")
-                    if resultatPostModif["Proba_Faillite"]>24: 
-                        st.write(":red[Prêt refusé...]")
-                    else:
-                        st.write(":green[Prêt accepté !]")
-
             CB_graphs = st.checkbox("Comparaison des valeurs via graphes")
             if CB_graphs:
                 c1, c2 = st.columns(2)
@@ -106,5 +89,31 @@ if id_user:
                     feat_selected_scatter_2 = feat_selected_scatter_serie_2.iloc[0]
                     fig_scatter.add_annotation(x=feat_selected_scatter_1, y=feat_selected_scatter_2, text="Client", showarrow=True, arrowhead=1, arrowcolor="Red", bgcolor="Red")
                     c2.plotly_chart(fig_scatter)
+
+            CB_modifValues = st.checkbox("Modification de valeurs")
+            if CB_modifValues:
+                c1, c2 = st.columns([0.36, 0.64])
+                edited_df = c1.data_editor(feat_df, disabled=("Feature_Names", "Shap_Values"))
+                if c2.button("Appliquer les modifications"):
+                    new_row = pd.DataFrame(columns=edited_df['Feature_Names'].tolist())
+                    new_row.loc[0] = edited_df['Feature_Values'].tolist()
+                    new_row['SK_ID_CURR'] = int(id_user)
+                    new_row_sorted = new_row[list_features]
+                    new_row_json = new_row_sorted.to_json()
+                    req = requests.post("https://openclassrooms-projet7-oc.azurewebsites.net/prediction", json=new_row_json)
+                    resultatPostModif = req.json()
+                    difference = resultat["Proba_Faillite"] - resultatPostModif["Proba_Faillite"]
+                    if difference > 0:
+                        newResult = "Nouvelle probabilité de faillite du client : " + str(round(resultatPostModif["Proba_Faillite"], 2)) + "%. ➜ Gain de " + str(round(difference, 2)) + "%."
+                    elif difference < 0:
+                        newResult = "Nouvelle probabilité de faillite du client : " + str(round(resultatPostModif["Proba_Faillite"], 2)) + "%. ➜ Perte de " + str(round(difference, 2)) + "%."
+                    else:
+                        newResult = "Nouvelle probabilité de faillite du client : " + str(round(resultatPostModif["Proba_Faillite"], 2)) + "%. ➜ Aucune impact sur la probabilité de faillite."
+                    c2.write(newResult)
+                    if resultatPostModif["Proba_Faillite"]>24: 
+                        c2.write(":red[Prêt refusé...]")
+                    else:
+                        c2.write(":green[Prêt accepté !]")
+
         else:
             st.write("Id non trouvé dans la base de donnée. Essayez-en un autre (Exemple : 100001, 100005, 100028).")
