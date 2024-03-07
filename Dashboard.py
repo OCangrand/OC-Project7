@@ -3,6 +3,7 @@ import requests
 import streamlit as st
 import plotly.express as px
 
+# Ce dashboard est hébergé sur le cloud à l'adresse suivante : https://oc-project7-dashboard.streamlit.app/
 
 st.set_page_config(layout="wide")
 
