@@ -2,7 +2,7 @@ pytest==7.4.0
 pandas==2.1.4
 shap==0.42.1
 flask==2.2.5
-requests==2.31.0
+requests==2.32.0
 plotly==5.9.0
 streamlit==1.37.0
 lightgbm==4.1.0
